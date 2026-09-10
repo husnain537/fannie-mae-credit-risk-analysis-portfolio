@@ -50,7 +50,7 @@
 
   .byline {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 1.00em;
+    font-size: 1.05em;
     color: var(--ink-soft);
   }
 
@@ -61,7 +61,7 @@
 
   nav a {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 1.00em;
+    font-size: 1.05em;
     text-decoration: none;
     color: var(--ink-soft);
     margin-left: 1.25em;
@@ -303,7 +303,8 @@
 
     <div class="section-label">03 &mdash; How I Worked</div>
     <div class="how-worked">
-      <p>I locked the question before writing a single query, checked every field against the data dictionary before using it, and treated every number as something to verify rather than assume. Where a finding could be read as a location-based lending decision, I checked it against the relevant regulation before including it. The deck below has the full detail, including that governance check.</p>
+      <p>Following the data governance rule, I gave the dataset glossary to a Claude Project and asked it to generate business questions with 3 to 4 sub-questions each, answerable only from fields present in the glossary. Before locking a business question, I checked whether any candidate included fields for race, ethnicity, or income. Once I'd locked mine, I asked Claude to check it against four tests and tell me exactly where it failed: (1) every field it needs exists in the glossary, (2) it decomposes into 2 to 4 genuine sub-questions, (3) it produces a specific number, not a vague judgment, (4) a decision-maker would act differently depending on the answer.</p>
+      <p>From there I generated queries against the locked question and double-checked the findings, then checked for bias and proxy leakage &mdash; especially in sub-question 4. Those bias findings went to NotebookLM to check against the EU AI Act: whether the state-level default pattern in property_state looks like genuine credit risk or could be acting as a hidden proxy for race, ethnicity, or income, since none of those fields exist in this dataset. The deck below has the full detail, including that governance check.</p>
     </div>
 
     <div class="cta">
