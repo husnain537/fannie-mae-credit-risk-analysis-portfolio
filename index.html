@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Default Risk by Loan-to-Value — Husnain Zahoor</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        line-height: 1.6;
+        color: #1e293b;
+        background: #f8fafc;
+    }
+
+    :root {
+        --primary: #0f172a;
+        --secondary: #0ea5e9;
+        --accent: #06b6d4;
+        --success: #10b981;
+        --text: #334155;
+        --light-bg: #f8fafc;
+        --card-bg: #ffffff;
+    }
+
+    a { color: var(--secondary); }
+
+    /* NAV */
+    nav {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        padding: 1.2rem 0;
+    }
+    .nav-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .logo { color: white; font-size: 1.3rem; font-weight: 700; letter-spacing: -0.5px; text-decoration: none; }
+    .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+    .nav-links a {
+        color: rgba(255,255,255,0.9);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-deck-btn {
+        background: linear-gradient(135deg, #06b6d4, #0ea5e9);
+        color: white !important;
+        padding: 9px 20px !important;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s;
+    }
+    .nav-deck-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(6,182,212,0.4); }
+    .nav-deck-btn i { margin-right: 6px; font-size: 0.85rem; }
+
+    /* HERO */
+    .hero {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        padding: 5rem 2rem 4.5rem;
+    }
+    .hero-content { max-width: 780px; margin: 0 auto; color: white; }
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(6,182,212,0.15);
+        border: 1px solid rgba(6,182,212,0.3);
+        color: #67e8f9;
+        padding: 0.4rem 1.2rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+    }
+    .hero-badge::before { content: '●'; color: #4ade80; font-size: 0.6rem; }
+    .hero-content h1 {
+        font-size: 2.7rem;
+        font-weight: 700;
+        margin-bottom: 1.1rem;
+        line-height: 1.2;
+        letter-spacing: -0.5px;
+    }
+    .highlight {
+        background: linear-gradient(135deg, #06b6d4, #0ea5e9);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .hero-question {
+        font-size: 1.15rem;
+        color: #cbd5e1;
+        margin-bottom: 1.75rem;
+        max-width: 620px;
+    }
+    .hero-tools { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.25rem; }
+    .tool-pill {
+        background: rgba(6,182,212,0.1);
+        border: 1px solid rgba(6,182,212,0.25);
+        color: #67e8f9;
+        padding: 0.3rem 0.9rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+    .cta-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .cta-btn {
+        padding: 13px 28px;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.98rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .cta-btn-primary { background: linear-gradient(135deg, #06b6d4, #0ea5e9); color: white; }
+    .cta-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(6,182,212,0.4); }
+    .cta-btn-secondary { background: rgba(255,255,255,0.1); color: white; border: 2px solid rgba(255,255,255,0.2); }
+    .cta-btn-secondary:hover { background: rgba(255,255,255,0.15); border-color: var(--accent); }
+
+    /* SECTIONS */
+    section { padding: 80px 2rem; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    h2 {
+        text-align: center;
+        margin-bottom: 3rem;
+        font-size: 2.2rem;
+        color: var(--primary);
+        font-weight: 700;
+        position: relative;
+    }
+    h2::after {
+        content: '';
+        position: absolute;
+        bottom: -12px; left: 50%;
+        transform: translateX(-50%);
+        width: 70px; height: 4px;
+        background: linear-gradient(90deg, var(--secondary), var(--accent));
+        border-radius: 2px;
+    }
+    .section-sub {
+        text-align: center;
+        max-width: 640px;
+        margin: -1.75rem auto 3rem;
+        color: var(--text);
+        font-size: 1.02rem;
+    }
+
+    /* FINDINGS */
+    .findings { background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%); }
+    .findings-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    .finding-card {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        padding: 1.75rem 1.75rem 1.5rem;
+        transition: all 0.3s;
+        position: relative;
+    }
+    .finding-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+    .finding-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.9rem;
+    }
+    .finding-num {
+        width: 32px; height: 32px;
+        border-radius: 9px;
+        background: linear-gradient(135deg, var(--secondary), var(--accent));
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 700;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .finding-tag {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--secondary);
+        background: #e0f2fe;
+        padding: 3px 10px;
+        border-radius: 999px;
+    }
+    .finding-card p { color: var(--text); font-size: 0.95rem; }
+
+    /* SKILLS */
+    .skills { background: white; }
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.25rem;
+    }
+    .skill-card {
+        background: white;
+        padding: 1.75rem 1.5rem;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s;
+        text-align: center;
+    }
+    .skill-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: var(--secondary); }
+    .skill-icon {
+        width: 56px; height: 56px;
+        background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+        border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto 1rem;
+        color: var(--secondary);
+        font-size: 1.5rem;
+    }
+    .skill-card h3 { color: var(--primary); font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .skill-card p { color: var(--text); font-size: 0.88rem; }
+
+    /* HOW I WORKED */
+    .how-worked { background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%); }
+    .flow-box { fill: #ffffff; stroke: #bae6fd; stroke-width: 1; }
+    .flow-num-badge { fill: var(--secondary); }
+    .flow-num-text { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; fill: white; }
+    .flow-title { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; fill: var(--primary); }
+    .flow-sub { font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 400; fill: var(--text); }
+    .flow-arrow { stroke: #94a3b8; stroke-width: 1.4; fill: none; }
+    .flow-caption {
+        text-align: center;
+        max-width: 640px;
+        margin: 1.75rem auto 0;
+        color: var(--text);
+        font-size: 0.95rem;
+    }
+
+    .cta-center { text-align: center; margin-top: 3rem; }
+
+    /* FOOTER */
+    footer { background: #020617; color: #94a3b8; text-align: center; padding: 3rem 2rem; font-size: 0.9rem; }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .footer-link {
+        display: flex; align-items: center; gap: 0.7rem;
+        padding: 11px 22px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 10px;
+        color: #cbd5e1;
+        text-decoration: none;
+        font-weight: 600; font-size: 0.92rem;
+        transition: all 0.3s;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-link:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); color: white; }
+    .footer-link.linkedin:hover { background: #0077B5; border-color: #0077B5; }
+    .copyright { padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); color: #64748b; }
+
+    @media (max-width: 640px) {
+        .hero-content h1 { font-size: 2rem; }
+        .findings-grid { grid-template-columns: 1fr; }
+        section { padding: 60px 1.25rem; }
+    }
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-container">
+        <a href="https://husnain537.github.io/" class="logo">Husnain Zahoor</a>
+        <ul class="nav-links" style="list-style:none; display:flex; gap:1.5rem; align-items:center; margin:0; padding:0;">
+            <li><a href="https://www.linkedin.com/in/husnainzahoor/">LinkedIn</a></li>
+            <li><a href="mailto:husnainzahoor313@gmail.com">Email</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="hero" style="position:relative;overflow:hidden;">
+    <canvas id="particles-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;"></canvas>
+    <div class="hero-content" style="position:relative;z-index:2;">
+        <div class="hero-badge">Credit Risk · Fannie Mae Single-Family Loan Performance, 2003Q1</div>
+        <h1>Default Risk by <span class="highlight">Loan-to-Value</span></h1>
+        <p class="hero-question">"Which borrower and loan risk segments drove the highest default rates in this cohort?"</p>
+        <div class="hero-tools">
+            <span class="tool-pill">PostgreSQL</span>
+            <span class="tool-pill">1.4M Loans</span>
+            <span class="tool-pill">Claude Project</span>
+            <span class="tool-pill">NotebookLM</span>
+            <span class="tool-pill">EU AI Act Review</span>
+        </div>
+        <div class="cta-buttons">
+            <a class="cta-btn cta-btn-primary" href="https://drive.google.com/file/d/1-k3tiG4iTlXQhnjcPPsDmW9V6vm3yrgy/view?usp=sharing" target="_blank"><i class="fas fa-chart-bar"></i>View the full briefing deck</a>
+            <a class="cta-btn cta-btn-secondary" href="https://husnain537.github.io/">Back to portfolio</a>
+        </div>
+    </div>
+</section>
+
+<section class="findings">
+    <div class="container">
+        <h2>Verified Findings</h2>
+        <p class="section-sub">Every number below is traced to a query against the full 2003Q1 file — nothing here is estimated.</p>
+        <div class="findings-grid">
+
+            <div class="finding-card">
+                <div class="finding-top">
+                    <div class="finding-num">01</div>
+                    <div class="finding-tag">SQ1</div>
+                </div>
+                <p>Loan-to-value is the strongest single factor associated with default in this cohort. Default rate rose from 0.14% at LTV ≤60 to 3.94% at LTV 90–97 — a ~28x spread, climbing step by step across every bucket in between.</p>
+            </div>
+
+            <div class="finding-card">
+                <div class="finding-top">
+                    <div class="finding-num">02</div>
+                    <div class="finding-tag">SQ2</div>
+                </div>
+                <p>Credit score confirms the same pattern independently: default rate fell from 2.69% in the weakest score decile to 0.18% in the strongest, a ~15x spread.</p>
+            </div>
+
+            <div class="finding-card">
+                <div class="finding-top">
+                    <div class="finding-num">03</div>
+                    <div class="finding-tag">SQ3</div>
+                </div>
+                <p>Debt-to-income shows a real but weaker signal: average maximum delinquency status rose from 0.32 (DTI under 20) to 0.76 (DTI 50+) — directional support, not a strong driver on its own.</p>
+            </div>
+
+            <div class="finding-card">
+                <div class="finding-top">
+                    <div class="finding-num">04</div>
+                    <div class="finding-tag">SQ4</div>
+                </div>
+                <p>Geography is a downstream cost, not a predictor. Once loans had already defaulted, Michigan, Ohio, Florida, Georgia, and Illinois carried the highest total dollar exposure — where losses land, not who defaults.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="skills">
+    <div class="container">
+        <h2>What This Analysis Drew On</h2>
+        <p class="section-sub">Every step below is a real skill this finding depended on, not just the number itself.</p>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-database"></i></div>
+                <h3>PostgreSQL</h3>
+                <p>Held the full loan file and ran every query behind these numbers.</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-robot"></i></div>
+                <h3>Claude Project</h3>
+                <p>Kept the locked question, field definitions, and every verified result anchored to what was actually confirmed.</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-book"></i></div>
+                <h3>NotebookLM</h3>
+                <p>Worked through the regulatory reading behind the governance check on the geography finding.</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-layer-group"></i></div>
+                <h3>Gamma</h3>
+                <p>Built the presentation deck this page summarizes.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="how-worked">
+    <div class="container">
+        <h2>How I Worked</h2>
+        <svg width="100%" viewBox="0 0 720 300" role="img" style="display:block; margin: 0 auto;">
+            <title>How I worked, six steps</title>
+            <desc>Generate candidate questions, screen for sensitive fields, lock the question and pass a four-test check, build and verify queries, run a bias and proxy check, then an EU AI Act review.</desc>
+            <defs>
+                <marker id="flow-arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M2 1L8 5L2 9" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </marker>
+            </defs>
+
+            <g>
+                <rect class="flow-box" x="40" y="50" width="200" height="60" rx="10"/>
+                <circle class="flow-num-badge" cx="62" cy="72" r="12"/>
+                <text class="flow-num-text" x="62" y="76" text-anchor="middle">1</text>
+                <text class="flow-title" x="82" y="76">Generate candidates</text>
+                <text class="flow-sub" x="52" y="98">Claude drafts business Qs</text>
+            </g>
+
+            <g>
+                <rect class="flow-box" x="260" y="50" width="200" height="60" rx="10"/>
+                <circle class="flow-num-badge" cx="282" cy="72" r="12"/>
+                <text class="flow-num-text" x="282" y="76" text-anchor="middle">2</text>
+                <text class="flow-title" x="302" y="76">Screen fields</text>
+                <text class="flow-sub" x="272" y="98">Race, ethnicity, income</text>
+            </g>
+
+            <g>
+                <rect class="flow-box" x="480" y="50" width="200" height="60" rx="10"/>
+                <circle class="flow-num-badge" cx="502" cy="72" r="12"/>
+                <text class="flow-num-text" x="502" y="76" text-anchor="middle">3</text>
+                <text class="flow-title" x="522" y="76">Lock question</text>
+                <text class="flow-sub" x="492" y="98">Pass 4-test check</text>
+            </g>
+
+            <line class="flow-arrow" x1="240" y1="80" x2="258" y2="80" marker-end="url(#flow-arrowhead)"/>
+            <line class="flow-arrow" x1="460" y1="80" x2="478" y2="80" marker-end="url(#flow-arrowhead)"/>
+            <path class="flow-arrow" d="M580 110 L580 145 L140 145 L140 168" marker-end="url(#flow-arrowhead)"/>
+
+            <g>
+                <rect class="flow-box" x="40" y="170" width="200" height="60" rx="10"/>
+                <circle class="flow-num-badge" cx="62" cy="192" r="12"/>
+                <text class="flow-num-text" x="62" y="196" text-anchor="middle">4</text>
+                <text class="flow-title" x="82" y="196">Build &amp; verify</text>
+                <text class="flow-sub" x="52" y="218">SQL against locked question</text>
+            </g>
+
+            <g>
+                <rect class="flow-box" x="260" y="170" width="200" height="60" rx="10"/>
+                <circle class="flow-num-badge" cx="282" cy="192" r="12"/>
+                <text class="flow-num-text" x="282" y="196" text-anchor="middle">5</text>
+                <text class="flow-title" x="302" y="196">Bias &amp; proxy check</text>
+                <text class="flow-sub" x="272" y="218">Especially geography</text>
+            </g>
+
+            <g>
+                <rect class="flow-box" x="480" y="170" width="200" height="60" rx="10"/>
+                <circle class="flow-num-badge" cx="502" cy="192" r="12"/>
+                <text class="flow-num-text" x="502" y="196" text-anchor="middle">6</text>
+                <text class="flow-title" x="522" y="196">EU AI Act review</text>
+                <text class="flow-sub" x="492" y="218">NotebookLM check</text>
+            </g>
+
+            <line class="flow-arrow" x1="240" y1="200" x2="258" y2="200" marker-end="url(#flow-arrowhead)"/>
+            <line class="flow-arrow" x1="460" y1="200" x2="478" y2="200" marker-end="url(#flow-arrowhead)"/>
+        </svg>
+        <p class="flow-caption">Every candidate question was screened for race, ethnicity, and income fields before any question was locked. The geography finding (step 5) went through an added EU AI Act check via NotebookLM before it was used.</p>
+
+        <div class="cta-center">
+            <a class="cta-btn cta-btn-primary" href="https://drive.google.com/file/d/1-k3tiG4iTlXQhnjcPPsDmW9V6vm3yrgy/view?usp=sharing" target="_blank"><i class="fas fa-chart-bar"></i>View the full briefing deck</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-links">
+        <a href="https://husnain537.github.io/" class="footer-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+        <a href="https://www.linkedin.com/in/husnainzahoor/" class="footer-link linkedin" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+        <a href="mailto:husnainzahoor313@gmail.com" class="footer-link"><i class="fas fa-envelope"></i> Email</a>
+    </div>
+    <div class="copyright">
+        <p>&copy; 2026 Husnain Zahoor | Fannie Mae Credit Risk Project</p>
+    </div>
+</footer>
+
+<script>
+    function initParticles() {
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        const hero = canvas.parentElement;
+        function resize() {
+            canvas.width = hero.offsetWidth;
+            canvas.height = hero.offsetHeight;
+        }
+        resize();
+        const particles = [];
+        const particleCount = 50;
+        const connectionDistance = 130;
+        const colors = [
+            'rgba(6, 182, 212, 0.8)',
+            'rgba(14, 165, 233, 0.8)',
+            'rgba(255, 255, 255, 0.5)',
+        ];
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2.5 + 1,
+                speedX: (Math.random() - 0.5) * 0.4,
+                speedY: (Math.random() - 0.5) * 0.4,
+                color: colors[Math.floor(Math.random() * colors.length)]
+            });
+        }
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if (p.x <= 0 || p.x >= canvas.width) p.speedX *= -1;
+                if (p.y <= 0 || p.y >= canvas.height) p.speedY *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+                particles.forEach(op => {
+                    const dx = p.x - op.x, dy = p.y - op.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < connectionDistance) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(6, 182, 212, ${0.2 * (1 - dist/connectionDistance)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(op.x, op.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+        window.addEventListener('resize', resize);
+    }
+    window.addEventListener('load', initParticles);
+</script>
+</body>
+</html>
