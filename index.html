@@ -231,12 +231,16 @@
 
     /* HOW I WORKED */
     .how-worked { background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%); }
-    .flow-box { fill: #ffffff; stroke: #bae6fd; stroke-width: 1; }
-    .flow-num-badge { fill: var(--secondary); }
-    .flow-num-text { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; fill: white; }
-    .flow-title { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; fill: var(--primary); }
-    .flow-sub { font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 400; fill: var(--text); }
+    .flow-box-gray { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1; }
+    .flow-box-teal { fill: #ecfdf5; stroke: #6ee7b7; stroke-width: 1; }
+    .flow-title-gray { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; fill: #0f172a; }
+    .flow-sub-gray { font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 400; fill: #64748b; }
+    .flow-title-teal { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; fill: #065f46; }
+    .flow-sub-teal { font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 400; fill: #0f766e; }
     .flow-arrow { stroke: #94a3b8; stroke-width: 1.4; fill: none; }
+    .flow-legend-dot-gray { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; }
+    .flow-legend-dot-teal { fill: #ecfdf5; stroke: #6ee7b7; stroke-width: 1.5; }
+    .flow-legend-text { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; fill: #475569; }
     .flow-caption {
         text-align: center;
         max-width: 640px;
@@ -380,69 +384,65 @@
         <h2>How I Worked</h2>
         <svg width="100%" viewBox="0 0 720 300" role="img" style="display:block; margin: 0 auto;">
             <title>How I worked, six steps</title>
-            <desc>Generate candidate questions, screen for sensitive fields, lock the question and pass a four-test check, build and verify queries, run a bias and proxy check, then an EU AI Act review.</desc>
+            <desc>Generate candidate questions, screen for sensitive fields, and lock the question with a four-test check — then build and verify queries, run a bias and proxy check, and complete an EU AI Act review.</desc>
             <defs>
                 <marker id="flow-arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                     <path d="M2 1L8 5L2 9" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </marker>
             </defs>
 
+            <!-- Legend -->
+            <circle class="flow-legend-dot-gray" cx="270" cy="24" r="6"/>
+            <text class="flow-legend-text" x="284" y="28">Setting up the question</text>
+            <circle class="flow-legend-dot-teal" cx="460" cy="24" r="6"/>
+            <text class="flow-legend-text" x="474" y="28">Validating the result</text>
+
+            <!-- Row 1: setup (gray) -->
             <g>
-                <rect class="flow-box" x="40" y="50" width="200" height="60" rx="10"/>
-                <circle class="flow-num-badge" cx="62" cy="72" r="12"/>
-                <text class="flow-num-text" x="62" y="76" text-anchor="middle">1</text>
-                <text class="flow-title" x="82" y="76">Generate candidates</text>
-                <text class="flow-sub" x="52" y="98">Claude drafts business Qs</text>
+                <rect class="flow-box-gray" x="30" y="50" width="200" height="60" rx="10"/>
+                <text class="flow-title-gray" x="130" y="76" text-anchor="middle">Generate candidates</text>
+                <text class="flow-sub-gray" x="130" y="96" text-anchor="middle">Claude drafts business Qs</text>
             </g>
 
             <g>
-                <rect class="flow-box" x="260" y="50" width="200" height="60" rx="10"/>
-                <circle class="flow-num-badge" cx="282" cy="72" r="12"/>
-                <text class="flow-num-text" x="282" y="76" text-anchor="middle">2</text>
-                <text class="flow-title" x="302" y="76">Screen fields</text>
-                <text class="flow-sub" x="272" y="98">Race, ethnicity, income</text>
+                <rect class="flow-box-gray" x="260" y="50" width="200" height="60" rx="10"/>
+                <text class="flow-title-gray" x="360" y="76" text-anchor="middle">Screen fields</text>
+                <text class="flow-sub-gray" x="360" y="96" text-anchor="middle">Race, ethnicity, income</text>
             </g>
 
             <g>
-                <rect class="flow-box" x="480" y="50" width="200" height="60" rx="10"/>
-                <circle class="flow-num-badge" cx="502" cy="72" r="12"/>
-                <text class="flow-num-text" x="502" y="76" text-anchor="middle">3</text>
-                <text class="flow-title" x="522" y="76">Lock question</text>
-                <text class="flow-sub" x="492" y="98">Pass 4-test check</text>
+                <rect class="flow-box-gray" x="490" y="50" width="200" height="60" rx="10"/>
+                <text class="flow-title-gray" x="590" y="76" text-anchor="middle">Lock question</text>
+                <text class="flow-sub-gray" x="590" y="96" text-anchor="middle">Pass 4-test check</text>
             </g>
 
-            <line class="flow-arrow" x1="240" y1="80" x2="258" y2="80" marker-end="url(#flow-arrowhead)"/>
-            <line class="flow-arrow" x1="460" y1="80" x2="478" y2="80" marker-end="url(#flow-arrowhead)"/>
-            <path class="flow-arrow" d="M580 110 L580 145 L140 145 L140 168" marker-end="url(#flow-arrowhead)"/>
+            <line class="flow-arrow" x1="230" y1="80" x2="258" y2="80" marker-end="url(#flow-arrowhead)"/>
+            <line class="flow-arrow" x1="460" y1="80" x2="488" y2="80" marker-end="url(#flow-arrowhead)"/>
+            <path class="flow-arrow" d="M590 110 L590 148 L130 148 L130 176" marker-end="url(#flow-arrowhead)"/>
 
+            <!-- Row 2: validation (teal) -->
             <g>
-                <rect class="flow-box" x="40" y="170" width="200" height="60" rx="10"/>
-                <circle class="flow-num-badge" cx="62" cy="192" r="12"/>
-                <text class="flow-num-text" x="62" y="196" text-anchor="middle">4</text>
-                <text class="flow-title" x="82" y="196">Build &amp; verify</text>
-                <text class="flow-sub" x="52" y="218">SQL against locked question</text>
+                <rect class="flow-box-teal" x="30" y="178" width="200" height="60" rx="10"/>
+                <text class="flow-title-teal" x="130" y="204" text-anchor="middle">Build &amp; verify</text>
+                <text class="flow-sub-teal" x="130" y="224" text-anchor="middle">SQL against locked question</text>
             </g>
 
             <g>
-                <rect class="flow-box" x="260" y="170" width="200" height="60" rx="10"/>
-                <circle class="flow-num-badge" cx="282" cy="192" r="12"/>
-                <text class="flow-num-text" x="282" y="196" text-anchor="middle">5</text>
-                <text class="flow-title" x="302" y="196">Bias &amp; proxy check</text>
-                <text class="flow-sub" x="272" y="218">Especially geography</text>
+                <rect class="flow-box-teal" x="260" y="178" width="200" height="60" rx="10"/>
+                <text class="flow-title-teal" x="360" y="204" text-anchor="middle">Bias &amp; proxy check</text>
+                <text class="flow-sub-teal" x="360" y="224" text-anchor="middle">Especially geography</text>
             </g>
 
             <g>
-                <rect class="flow-box" x="480" y="170" width="200" height="60" rx="10"/>
-                <circle class="flow-num-badge" cx="502" cy="192" r="12"/>
-                <text class="flow-num-text" x="502" y="196" text-anchor="middle">6</text>
-                <text class="flow-title" x="522" y="196">EU AI Act review</text>
-                <text class="flow-sub" x="492" y="218">NotebookLM check</text>
+                <rect class="flow-box-teal" x="490" y="178" width="200" height="60" rx="10"/>
+                <text class="flow-title-teal" x="590" y="204" text-anchor="middle">EU AI Act review</text>
+                <text class="flow-sub-teal" x="590" y="224" text-anchor="middle">NotebookLM check</text>
             </g>
 
-            <line class="flow-arrow" x1="240" y1="200" x2="258" y2="200" marker-end="url(#flow-arrowhead)"/>
-            <line class="flow-arrow" x1="460" y1="200" x2="478" y2="200" marker-end="url(#flow-arrowhead)"/>
+            <line class="flow-arrow" x1="230" y1="208" x2="258" y2="208" marker-end="url(#flow-arrowhead)"/>
+            <line class="flow-arrow" x1="460" y1="208" x2="488" y2="208" marker-end="url(#flow-arrowhead)"/>
         </svg>
-        <p class="flow-caption">Every candidate question was screened for race, ethnicity, and income fields before any question was locked. The geography finding (step 5) went through an added EU AI Act check via NotebookLM before it was used.</p>
+        <p class="flow-caption">Every candidate question was screened for race, ethnicity, and income fields before any question was locked. The geography finding then went through an added EU AI Act check via NotebookLM before it was used.</p>
 
         <div class="cta-center">
             <a class="cta-btn cta-btn-primary" href="https://drive.google.com/file/d/1-k3tiG4iTlXQhnjcPPsDmW9V6vm3yrgy/view?usp=sharing" target="_blank"><i class="fas fa-chart-bar"></i>View the full briefing deck</a>
